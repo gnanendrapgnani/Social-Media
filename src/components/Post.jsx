@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { MdDelete } from "react-icons/md";
-import PostList from "../store/post-list-store";
+import { PostList } from "../store/post-list-store";
 
 const Post = ({ post }) => {
   const { deletePost } = useContext(PostList);
@@ -20,7 +20,7 @@ const Post = ({ post }) => {
         <p className="card-text">{post.body}</p>
         <p>{post.reaction}</p>
         {post.tag.map((tag) => (
-          <span className="hashTag">{`#${tag} `}</span>
+          <span key={tag} className="hashTag">{`#${tag} `}</span>
         ))}
       </div>
     </div>
