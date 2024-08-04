@@ -1,7 +1,7 @@
 const CreatePost = () => {
   return (
     <>
-      <form>
+      <form className="create-post">
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
             Email address
