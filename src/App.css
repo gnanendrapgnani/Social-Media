@@ -1,3 +1,15 @@
 .conatiner {
   display: flex;
 }
+
+.content {
+  width: 100%;
+}
+
+.sidebar {
+  min-height: 567px;
+}
+
+.postCard {
+  margin: 20px 50px;
+}
