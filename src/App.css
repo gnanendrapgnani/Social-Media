@@ -11,11 +11,18 @@
 }
 
 .postCard {
-  margin: 20px 50px;
+  margin: 10px;
 }
 
 .create-post {
   width: 80%;
   margin-top: 50px;
   margin-left: 10%;
+}
+
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 10px 10px;
 }

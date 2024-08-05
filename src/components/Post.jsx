@@ -20,7 +20,7 @@ const Post = ({ post }) => {
         <p className="card-text">{post.body}</p>
         <p>{post.reaction}</p>
         {post.tag.map((tag) => (
-          <span key={tag} className="hashTag">{`#${tag} `}</span>
+          <span class="badge bg-primary mx-1">{`#${tag} `}</span>
         ))}
       </div>
     </div>
