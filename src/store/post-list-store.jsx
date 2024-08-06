@@ -3,6 +3,7 @@ import { createContext, useReducer } from "react";
 export const PostList = createContext({
   postList: [],
   addPost: () => {},
+  addInitialPosts: () => {},
   deletePost: () => {},
 });
 
@@ -10,6 +11,8 @@ const postListReducer = (currList, action) => {
   let newPostList = currList;
   if (action.type === "DELETE_POST") {
     newPostList = currList.filter((post) => post.id !== action.payload.postId);
+  } else if (action.type === "ADD_INITIAL_POSTS") {
+    newPostList = action.payload.posts;
   } else if (action.type === "ADD_POST") {
     if (
       action.payload.userId === "" ||
@@ -27,10 +30,7 @@ const postListReducer = (currList, action) => {
 };
 
 const PostListProvider = ({ children }) => {
-  const [postList, dispatchPostList] = useReducer(
-    postListReducer,
-    DEFAULT_POST_LIST
-  );
+  const [postList, dispatchPostList] = useReducer(postListReducer, []);
 
   const addPost = (usetId, postTitle, postBody, reaction, tags) => {
     // console.log(`${usetId}, ${postTitle}, ${postBody}, ${reaction}, ${tags}`);
@@ -46,6 +46,15 @@ const PostListProvider = ({ children }) => {
       },
     });
   };
+  const addInitialPosts = (posts) => {
+    // console.log(`${usetId}, ${postTitle}, ${postBody}, ${reaction}, ${tags}`);
+    dispatchPostList({
+      type: "ADD_INITIAL_POSTS",
+      payload: {
+        posts,
+      },
+    });
+  };
   const deletePost = (postId) => {
     dispatchPostList({
       type: "DELETE_POST",
@@ -55,29 +64,12 @@ const PostListProvider = ({ children }) => {
     });
   };
   return (
-    <PostList.Provider value={{ postList, addPost, deletePost }}>
+    <PostList.Provider
+      value={{ postList, addPost, deletePost, addInitialPosts }}
+    >
       {children}
     </PostList.Provider>
   );
 };
-
-const DEFAULT_POST_LIST = [
-  {
-    id: "1",
-    title: "Go to Chitradurga",
-    body: "Hi friends i am go to my home town",
-    reaction: 90,
-    userId: "user-9",
-    tag: ["vecation", "chitradurga"],
-  },
-  {
-    id: "2",
-    title: "Go to Chitanaduku",
-    body: "Hi friends i am go to my home village",
-    reaction: 27,
-    userId: "user-10",
-    tag: ["village", "chitanduku"],
-  },
-];
 
 export default PostListProvider;

@@ -7,7 +7,7 @@
 }
 
 .sidebar {
-  min-height: 567px;
+  max-height: 567px;
 }
 
 .postCard {
@@ -25,4 +25,20 @@
   flex-wrap: wrap;
   gap: 10px;
   margin: 20px 10px 10px;
+}
+
+.welcomeMsg {
+  width: 100%;
+  text-align: center;
+  margin: 100px 0;
+}
+
+.btn {
+  text-align: center;
+}
+
+.spinner {
+  width: 100%;
+  text-align: center;
+  margin: 100px 0;
 }
