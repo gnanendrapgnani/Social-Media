@@ -19,8 +19,11 @@ const Post = ({ post }) => {
         </h5>
         <p className="card-text">{post.body}</p>
         <p>{post.reaction}</p>
-        {post.tags.map((tag) => (
-          <span className="badge bg-primary mx-1">{`#${tag} `}</span>
+        {post.tags.map((tag, index) => (
+          <span
+            key={index}
+            className="badge bg-primary mx-1"
+          >{`#${tag} `}</span>
         ))}
       </div>
     </div>
