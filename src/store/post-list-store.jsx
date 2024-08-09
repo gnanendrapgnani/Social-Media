@@ -1,9 +1,15 @@
-import { createContext, useCallback, useReducer } from "react";
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 
 export const PostList = createContext({
   postList: [],
   addPost: () => {},
-  addInitialPosts: () => {},
+  fatching: false,
   deletePost: () => {},
 });
 
@@ -19,7 +25,7 @@ const postListReducer = (currList, action) => {
       action.payload.title === "" ||
       action.payload.body === "" ||
       action.payload.reaction === "" ||
-      action.payload.tag === ""
+      action.payload.tags === ""
     ) {
       alert("Enter the All input felid to submit");
     } else {
@@ -31,23 +37,15 @@ const postListReducer = (currList, action) => {
 
 const PostListProvider = ({ children }) => {
   const [postList, dispatchPostList] = useReducer(postListReducer, []);
+  const [fatching, setFatching] = useState(false);
 
-  const addPost = (usetId, postTitle, postBody, reaction, tags) => {
-    // console.log(`${usetId}, ${postTitle}, ${postBody}, ${reaction}, ${tags}`);
+  const addPost = (post) => {
     dispatchPostList({
       type: "ADD_POST",
-      payload: {
-        id: Date.now(),
-        userId: usetId,
-        title: postTitle,
-        body: postBody,
-        reaction: reaction,
-        tag: tags,
-      },
+      payload: post,
     });
   };
   const addInitialPosts = (posts) => {
-    // console.log(`${usetId}, ${postTitle}, ${postBody}, ${reaction}, ${tags}`);
     dispatchPostList({
       type: "ADD_INITIAL_POSTS",
       payload: {
@@ -66,10 +64,25 @@ const PostListProvider = ({ children }) => {
     },
     [dispatchPostList]
   );
+
+  useEffect(() => {
+    setFatching(true);
+
+    const controller = new AbortController();
+    const signal = controller.signal;
+    fetch("https://dummyjson.com/posts", { signal })
+      .then((res) => res.json())
+      .then((data) => {
+        addInitialPosts(data.posts);
+        setFatching(false);
+      });
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
   return (
-    <PostList.Provider
-      value={{ postList, addPost, deletePost, addInitialPosts }}
-    >
+    <PostList.Provider value={{ postList, addPost, fatching, deletePost }}>
       {children}
     </PostList.Provider>
   );
