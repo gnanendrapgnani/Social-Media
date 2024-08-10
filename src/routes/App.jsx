@@ -18,7 +18,6 @@ function App() {
         <div className="content">
           <Header />
           <Outlet />
-          {/* {selectedTab === "Home" ? <PostList /> : <CreatePost />} */}
           <Footer />
         </div>
       </div>
