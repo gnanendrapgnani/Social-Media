@@ -13,7 +13,7 @@ const CreatePost = () => {
           <input
             type="text"
             className="form-control"
-            name="usetId"
+            name="userId"
             id="userId"
             placeholder="Your User ID"
           />
@@ -76,9 +76,9 @@ const CreatePost = () => {
 };
 
 export async function createPostAction(data) {
-  const fromData = await data.request.formData();
-  const postData = Object.fromEntries(fromData);
-  postData.tags = post.tags.split(" ");
+  const formData = await data.request.formData();
+  const postData = Object.fromEntries(formData);
+  postData.tags = postData.tags.split(" ");
   console.log(postData);
 
   fetch("https://dummyjson.com/posts/add", {
@@ -87,8 +87,8 @@ export async function createPostAction(data) {
     body: JSON.stringify(postData),
   })
     .then((res) => res.json())
-    .then((posts) => {
-      console.log(posts);
+    .then((post) => {
+      console.log(post);
     });
   return redirect("/");
 }
